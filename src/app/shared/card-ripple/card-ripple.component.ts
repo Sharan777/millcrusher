@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'mcu-card-ripple',
@@ -13,6 +13,7 @@ export class CardRippleComponent implements OnInit {
 
   radius: number;
   color: string;
+  @Input() details:any;
   
   constructor() { }
 
