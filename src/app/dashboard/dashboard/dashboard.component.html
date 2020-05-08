@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<!-- <p>dashboard works!</p> -->
+<div class="container-fluid">
+    <div class="col-12 row">
+        <div class="col-4 pd10" *ngFor="let item of dItems">
+            <mcu-card-ripple (click)="cardClick(item)" [details]="item"></mcu-card-ripple>
+        </div>
+    </div>
+</div>
