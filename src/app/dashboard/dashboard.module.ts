@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
-import { TripSheetsComponent } from './trip-sheets/trip-sheets.component';
+import { TripSheetsComponent, NewTripSheetDialog } from './trip-sheets/trip-sheets.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { TransportersComponent } from './transporters/transporters.component';
 import { ContractorsComponent } from './contractors/contractors.component';
 import { FuelComponent } from './fuel/fuel.component';
-import { BillsComponent } from './bills/bills.component'
+import { BillsComponent } from './bills/bills.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -25,13 +26,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, TripSheetsComponent, AccountsComponent, PaymentsComponent, TransportersComponent, ContractorsComponent, FuelComponent, BillsComponent],
+  declarations: [DashboardComponent, TripSheetsComponent, AccountsComponent, PaymentsComponent,
+                TransportersComponent, ContractorsComponent, FuelComponent, BillsComponent,
+                NewTripSheetDialog],
   imports: [
     CommonModule,
     SharedModule,
     MaterialModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
+  entryComponents: [NewTripSheetDialog],
   exports: []
 })
 export class DashboardModule { }

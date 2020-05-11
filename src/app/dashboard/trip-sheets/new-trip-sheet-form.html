@@ -1,0 +1,225 @@
+<h3 mat-dialog-title>New Trip</h3>
+<div mat-dialog-content>
+
+  <form [formGroup]="newTriptSheetForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <!-- <label class="col-sm-6 col-md-6 col-lg-6" >
+      Trip No:
+      <input type="text" formControlName="tripSheetNo" required>
+      <input matInput type="text" formControlName="tripSheetNo">
+    </label> -->
+    <div class="dfx">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <mat-form-field class="example-form-field">
+          <mat-label>Trip No</mat-label>
+          <input matInput type="text" formControlName="tripSheetNo" required >
+        </mat-form-field>
+      </div>      
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <mat-form-field>
+            <mat-label>Order Date</mat-label>
+            <input matInput [matDatepicker]="picker1" formControlName="orderDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+    </div>
+
+    <div class="dfx">
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field class="example-full-width">
+          <mat-label>Transport Agency</mat-label>
+          <input type="text" matInput formControlName="transportAgency" [matAutocomplete]="autoTA">
+          <mat-autocomplete #autoTA="matAutocomplete" [displayWith]="displayTAFn">
+            <mat-option *ngFor="let option of TAfilteredOptions | async" [value]="option">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>       
+      </div>
+
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field class="example-form-field">
+          <mat-label>Vehicle Number</mat-label>
+        <input matInput type="text" formControlName="vehicleNo">
+      </mat-form-field>
+      </div>
+    </div>
+
+    <div class="dfx">
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field class="example-full-width">
+          <mat-label>Contractor</mat-label>
+          <input type="text" matInput formControlName="contractor" [matAutocomplete]="autoC">
+          <mat-autocomplete #autoC="matAutocomplete" [displayWith]="displayContractorsFn">
+            <mat-option *ngFor="let option of contractorsFilteredOptions | async" [value]="option">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>       
+      </div>
+  
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field class="example-form-field">
+          <mat-label>Driver Name</mat-label>
+        <input matInput type="text" formControlName="driverName">
+      </mat-form-field>
+      </div>
+    </div>
+    <div class="dfx">
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field class="example-form-field">
+          <mat-label>Order Location</mat-label>
+        <input matInput type="text" formControlName="orderLocation">
+      </mat-form-field>
+      </div>  
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field>
+          <mat-label>Material Type</mat-label>
+          <mat-select formControlName="materialType">
+            <mat-option *ngFor="let material of materialTypes" [value]="material.value">
+              {{material.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="dfx">
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field>
+          <mat-label>Material Unit</mat-label>
+          <mat-select formControlName="materialUnit">
+            <mat-option *ngFor="let unit of materialnits" [value]="unit.value">
+              {{unit.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field class="example-form-field">
+          <mat-label>Material Quantity</mat-label>
+        <input matInput type="number" formControlName="materialQuantity"
+         (input)="onMaterialInputChanges()">
+      </mat-form-field>
+      </div>
+    </div>
+
+    <div class="dfx">
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field class="example-form-field">
+          <mat-label>Material Rate</mat-label>
+        <input matInput type="number" formControlName="materialRate" (input)="onMaterialInputChanges()">
+      </mat-form-field>
+      </div>
+  
+      <div class="col-sm-6 col-md-6 col-lg-6" >
+        <mat-form-field class="example-form-field">
+          <mat-label>Amount</mat-label>
+        <input matInput type="text" readonly formControlName="MaterialTotalamount" (input)="onTripAmountInputChanges()">
+      </mat-form-field>
+      </div>
+    </div>
+
+    <div class="dfx">
+     
+        <mat-form-field class="col-sm-4 col-md-4 col-lg-4">
+          <mat-label>Payment Type</mat-label>
+          <mat-select formControlName="payment">
+            <mat-option *ngFor="let type of paymentTypes" [value]="type.value">
+              {{type.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      
+  
+      
+        <mat-form-field class="example-form-field" class="col-sm-4 col-md-4 col-lg-4">
+          <mat-label>Per Trip Rate</mat-label>
+        <input matInput type="number" formControlName="perTripRate" (input)="onTripAmountInputChanges()">
+      </mat-form-field>
+      
+      
+        <mat-form-field class="example-form-field" class="col-sm-4 col-md-4 col-lg-4">
+          <mat-label>Account Total Trip Rate</mat-label>
+        <input matInput type="text" readonly formControlName="totalTripAmount">
+      </mat-form-field>
+      
+    </div>
+
+    <mat-accordion>
+      <mat-expansion-panel (opened)="dieslePanelOpenState = true" (closed)="dieslePanelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Diesel Details
+          </mat-panel-title>
+          <mat-panel-description [ngClass]="dieslePanelOpenState?'green':'red'">
+            Currently {{dieslePanelOpenState ? 'Diesel' : 'No Diesel'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!-- <p>I'm visible because I am open</p> -->
+        <div formGroupName="diesel">
+          <!-- <h3>Diesel Details</h3>   -->
+          <div class="dfx">
+            <div class="col-sm-6 col-md-6 col-lg-6" >
+              <mat-form-field class="example-form-field">
+                <mat-label>Quantity in liters</mat-label>
+              <input matInput type="number" formControlName="quantity"
+              (input)="onDieselInputChanges()">
+            </mat-form-field>
+            </div>
+        
+            <div class="col-sm-6 col-md-6 col-lg-6" >
+              <mat-form-field class="example-form-field">
+                <mat-label>Cost Per Litre</mat-label>
+              <input matInput type="number" formControlName="ratePerLitre"
+              (input)="onDieselInputChanges()">
+            </mat-form-field>
+            </div>    
+          </div>
+    
+          <div class="dfx">
+            <div class="col-sm-6 col-md-6 col-lg-6" >
+              <mat-form-field class="example-form-field">
+                <mat-label>Total Amount</mat-label>
+              <input matInput type="number" readonly formControlName="totalAmount">
+            </mat-form-field>
+            </div>
+        
+            <div class="col-sm-6 col-md-6 col-lg-6" >
+              <mat-form-field class="example-form-field">
+                <mat-label>Opening Reading</mat-label>
+              <input matInput type="number" formControlName="openingReading">
+            </mat-form-field>
+            </div>
+          </div>      
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div class="dfx">
+      <button mat-raised-button color="primary" class="mtr" type="submit"
+     [disabled]="!newTriptSheetForm.valid">Submit</button>
+
+     <button mat-raised-button color="warn" class="mtr" type="submit" (click)="onNoClick()"
+     >Close</button>
+    </div>  
+    
+  </form>
+  
+  <!-- <hr>
+  
+  
+  <p>
+    Form Value: {{ newTriptSheetForm.value | json }}
+  </p>
+  
+  
+  <p>
+    Form Status: {{ newTriptSheetForm.status }}
+  </p> -->
+
+</div>
+<!-- <div mat-dialog-actions>
+  <button mat-button >No Thanks</button>
+  <button mat-button  cdkFocusInitial>Ok</button>
+</div> -->
