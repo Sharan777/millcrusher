@@ -12,6 +12,7 @@ import { TransportersComponent } from './transporters/transporters.component';
 import { ContractorsComponent } from './contractors/contractors.component';
 import { FuelComponent } from './fuel/fuel.component';
 import { BillsComponent } from './bills/bills.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -34,6 +35,7 @@ const routes: Routes = [
     SharedModule,
     MaterialModule,
     ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
   entryComponents: [NewTripSheetDialog],

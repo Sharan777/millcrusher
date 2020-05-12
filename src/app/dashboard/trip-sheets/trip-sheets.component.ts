@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { FormBuilder, Validators } from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { TripSheetService } from '../services/aws-cloud-serverless/trip-sheet.service'
 
 @Component({
   selector: 'mcu-trip-sheets',
@@ -12,7 +13,7 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class TripSheetsComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public tripSVC :TripSheetService) { }
 
   ngOnInit(): void {
   }
@@ -25,6 +26,11 @@ export class TripSheetsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      if( result ) {
+        this.tripSVC.newTripSheet();
+      }else {
+
+      }
       //this.animal = result;
     });
   }
@@ -168,7 +174,8 @@ export class NewTripSheetDialog {
   }
 
   onSubmit() {
-    console.log(this.newTriptSheetForm.value);    
+    console.log(this.newTriptSheetForm.value); 
+    this.dialogRef.close(this.newTriptSheetForm.value);   
   }
 }
 
