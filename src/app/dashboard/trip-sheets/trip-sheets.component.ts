@@ -16,6 +16,11 @@ export class TripSheetsComponent implements OnInit {
   constructor(public dialog: MatDialog, public tripSVC :TripSheetService) { }
 
   ngOnInit(): void {
+    this.getAllTripData();
+  }
+
+  getAllTripData() {
+      this.tripSVC.getAllTripSheets();
   }
 
   openNewTripDialog(): void {
@@ -25,9 +30,9 @@ export class TripSheetsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
       if( result ) {
-        this.tripSVC.newTripSheet();
+        this.tripSVC.newTripSheet(result);
       }else {
 
       }
@@ -100,7 +105,7 @@ export class NewTripSheetDialog {
       materialUnit:[''],
       materialQuantity:[''],
       materialRate:[''],
-      MaterialTotalamount:[''],
+      materialTotalAmount:[''],
       payment:[''],
       perTripRate:[''],
       totalTripAmount:[''],
@@ -128,7 +133,8 @@ export class NewTripSheetDialog {
         map(name => name ? this._filterContractors(name) : this.contractorsOptions.slice())
       );
 
-      this.newTriptSheetForm.controls['orderDate'].setValue(new Date())      
+      this.newTriptSheetForm.controls['orderDate'].setValue(new Date());
+      
     }
 
     displayTAFn(agency: TravelAgencies): string {
@@ -154,11 +160,11 @@ export class NewTripSheetDialog {
     onMaterialInputChanges() {
       let quantity = this.newTriptSheetForm.get('materialQuantity').value;
       let cost = this.newTriptSheetForm.get('materialRate').value;
-      this.newTriptSheetForm.get('MaterialTotalamount').setValue(quantity*cost);
+      this.newTriptSheetForm.get('materialTotalAmount').setValue(quantity*cost);
     }
 
     onTripAmountInputChanges() {
-      let matAmount = this.newTriptSheetForm.get('MaterialTotalamount').value;
+      let matAmount = this.newTriptSheetForm.get('materialTotalAmount').value;
       let costPerTrip = this.newTriptSheetForm.get('perTripRate').value;
       this.newTriptSheetForm.get('totalTripAmount').setValue(matAmount+costPerTrip);
     }
@@ -187,4 +193,3 @@ export interface Contractors {
   id: string;
   name: string;
 }
-
