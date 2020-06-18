@@ -18,9 +18,9 @@ export class AppComponent {
   ngAfterViewInit(){
 
     //this.main.height = 100 - (this.toolbar.height + this.footer.height)
-    console.log( "toolbar" );
-    console.log( this.footer.nativeElement.offsetHeight );
-    console.log( "footer" );
-    console.log( this.footer.nativeElement );
+    // console.log( "toolbar" );
+    // console.log( this.footer.nativeElement.offsetHeight );
+    // console.log( "footer" );
+    // console.log( this.footer.nativeElement );
   }
 }
